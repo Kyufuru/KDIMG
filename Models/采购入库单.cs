@@ -27,9 +27,10 @@ namespace 金蝶中间层镜像.Models
         public string 送货单号 { get; set; }
         public string 检验单号 { get; set; }
 
+        public DateTime? 到货日期 { get; set; }
         public DateTime? 创建日期 { get; set; }
-        public DateTime? 入库日期 { get; set; }
         public DateTime? 审核日期 { get; set; }
+        public DateTime? 入库日期 { get; set; }
         public DateTime? 最后修改时间 { get; set; }
 
         public double 应收数量 { get; set; }

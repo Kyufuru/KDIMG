@@ -570,7 +570,7 @@ namespace 金蝶中间层镜像
                     头ID,分录ID,源单头ID,源单分录ID,工程ID,物料ID,组织ID,
                     单位ID,批号ID,供应商ID,仓管员ID,仓库ID,仓位ID,项次,
                     产品名称,单据编号,送货单号,检验单号,
-                    创建日期,入库日期,审核日期,最后修改时间,
+                    到货日期,创建日期,审核日期,入库日期,最后修改时间,
                     应收数量,实收数量,退料数量,报检数量,检验合格数量,
                     单据状态,作废状态,检验状态,是否勾选检验
                 FROM (
@@ -581,9 +581,10 @@ namespace 金蝶中间层镜像
                         FSTOCKERID 仓管员ID,
                         FBILLNO 单据编号,
                         FDELIVERYBILL 送货单号,
-                        FDATE 入库日期,
+                        F_JPUM_GYSDHHXM 到货日期,
                         FCREATEDATE 创建日期,
                         FAPPROVEDATE 审核日期,
+                        FDATE 入库日期,
                         FMODIFYDATE 最后修改时间,
                         FDOCUMENTSTATUS 单据状态,
                         FCANCELSTATUS 作废状态
