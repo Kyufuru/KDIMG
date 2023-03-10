@@ -22,6 +22,7 @@ namespace 金蝶中间层镜像.Models
         public string 变更原因 { get; set; }
         public string 变更原因补充 { get; set; }
         public string 责任部门 { get; set; }
+        public string 研发定义 { get; set; }
         public double 变更数量 { get; set; }
         public DateTime? 创建日期 { get; set; }
         public DateTime? 审核日期 { get; set; }

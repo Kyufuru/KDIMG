@@ -1209,8 +1209,8 @@ namespace 金蝶中间层镜像
                     头ID,分录ID,物料ID,单位ID,组织ID,工程ID,
                     申请部门ID,申请人ID,
                     单据编号,主题,变更类型,变更内容,
-                    变更原因,变更原因补充,责任部门,变更数量,
-                    创建日期,审核日期,最后修改时间,单据状态
+                    变更原因,变更原因补充,责任部门,研发定义,
+                    变更数量,创建日期,审核日期,最后修改时间,单据状态
                 FROM (
                     SELECT
                         FID 头ID,
@@ -1225,6 +1225,12 @@ namespace 金蝶中间层镜像
                         F_JP_REMARKS 变更内容,
                         FREMARKS 变更原因补充,
                         F_JP_CCBGBM 责任部门,
+                        CASE F_JPUM_YFDYHXM 
+                            WHEN 1 THEN '正面'
+                            WHEN 2 THEN '中性'
+                            WHEN 3 THEN '负面'
+                            ELSE '未定义'
+                        END 研发定义,
                         FCREATEDATE 创建日期,
                         FAPPROVEDATE 审核日期,
                         FMODIFYDATE 最后修改时间,
@@ -1258,11 +1264,6 @@ namespace 金蝶中间层镜像
             using (var db = new SqlConnection(CONNSTR_IMG))
                 FormMain.NameList = db.Query<string>("SELECT 名称 FROM 监控表").ToArray();
 
-            manThr = new Thread(Main)
-            {
-                IsBackground = true,
-                Name = "手动"
-            };
             mainThr = new Thread(Main)
             {
                 IsBackground = true,
@@ -1279,6 +1280,11 @@ namespace 金蝶中间层镜像
             if (isManual)
             {
                 isManual = false;
+                manThr = new Thread(Main)
+                {
+                    IsBackground = true,
+                    Name = "手动"
+                };
                 manThr.Start();
             }
             return JWNormFun.ReturnMeasure();
@@ -1342,7 +1348,7 @@ namespace 金蝶中间层镜像
                     Update();
                     break;
                 }
-                else if (manThr.ThreadState == ThreadState.Running) manThr.Join();
+                else if (manThr != null && manThr.ThreadState == ThreadState.Running) manThr.Join();
 
                 now = DateTime.Now;
                 if (now.CompareTo(Timer_2Hour) >= 0)
